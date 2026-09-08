@@ -42,6 +42,21 @@ g++ -std=gnu++11 -o program path/to/file.cpp
 ## หมายเหตุ
 
 - ไฟล์ `.exe` ที่คอมไพล์แล้วไม่ถูกเก็บใน git ดู `.gitignore`
-- `misc/opencv_screen_motion_autokey.cpp` ต้องใช้ OpenCV และ Windows API จึงคอมไพล์บน Linux ไม่ได้
-- `algorithms/dynamic-programming/knapsack_01_memoization.cpp` บรรทัด 32 มี typo `<<cout` ที่ควรเป็น `<<endl` ทำให้คอมไพล์ไม่ผ่าน ยังไม่ได้แก้เพื่อคงเนื้อหาโค้ดเดิมไว้
 - ไฟล์ 5 ไฟล์มีคอมเมนต์ภาษาไทยที่บันทึกด้วย encoding TIS-620 จึงอ่านเป็นตัวอักษรเพี้ยนในโปรแกรมที่คาดหวัง UTF-8
+
+## bug ที่ยังค้างอยู่ในโค้ด
+
+ตรวจพบตอนจัดระเบียบ ยังไม่ได้แก้เพื่อคงเนื้อหาโค้ดเดิมไว้ ถ้าจะเอาไฟล์เหล่านี้ไปใช้อ้างอิงควรแก้ก่อน
+
+| ไฟล์ | ปัญหา |
+|---|---|
+| `algorithms/dynamic-programming/knapsack_01_memoization.cpp` | บรรทัด 32 พิมพ์ `<<cout` แทน `<<endl` คอมไพล์ไม่ผ่าน |
+| `algorithms/dynamic-programming/running_mean_recursive.cpp` | `findMean` ประกาศเป็น `double` แต่ไม่มี `return` ผลลัพธ์ไม่แน่นอน |
+| `algorithms/dynamic-programming/subset_max_count_target_sum.cpp` | memo ใช้ index แค่ `n` ไม่รวมค่าเป้าหมาย ทำให้ค่าที่ต่างกันชนกัน |
+| `algorithms/graph/kruskal_mst_weight_sum.cpp` | บรรทัด 33 เริ่ม `ne = 1` จึงรับ edge แค่ V-2 เส้น ขาดไป 1 เส้น |
+| `algorithms/backtracking/max_value_non_adjacent_subset.cpp` | อ่าน `A[-1]` เมื่อ `l == 0` |
+| `algorithms/backtracking/subset_sum_backtracking.cpp` | recursion ส่ง `l+1` แทนที่จะเป็น `i+1` |
+| `algorithms/greedy/v2_7_3_pair_max_sum.cpp` | อ่านเกินขอบ array เมื่อ n เป็นเลขคี่ |
+| `misc/opencv_screen_motion_autokey.cpp` | ต้องใช้ OpenCV และ Windows API คอมไพล์บน Linux ไม่ได้ |
+
+เวอร์ชันที่ถูกต้องของ Kruskal อยู่ที่ `algorithms/graph/kruskal_mst_print_edges.cpp`
