@@ -20,7 +20,8 @@ void subset(int l,int r,int sum){
 			
 			if(target-sum>=0){
 				checkchoose[i]= true;
-				subset(l+1,r,sum);
+				// continue from i+1 so each subset is built in index order and printed once
+				subset(i+1,r,sum);
 				checkchoose[i]= false;
 				sum-= A[i];
 			}else{

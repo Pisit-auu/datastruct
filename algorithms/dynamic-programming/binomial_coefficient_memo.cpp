@@ -6,7 +6,7 @@ int cnk(int n,int k){
 		return 1;
 	}
 	if(memo[n][k]!=-1){
-		memo[n][k];
+		return memo[n][k];
 	}
 	memo[n][k] = cnk(n-1,k-1) + cnk(n-1,k);
 	return memo[n][k];

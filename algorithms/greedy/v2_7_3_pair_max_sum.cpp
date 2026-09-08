@@ -11,12 +11,17 @@ int main(){
 	}
 	int count=0;
  	for(int i=0;i<n;i+=2){
+ 		if(i+1>=n){
+ 			// odd number of values: the last one has no partner
+ 			cout << A[i]<<endl;
+ 			count+=A[i];
+ 			break;
+		 }
  		cout << A[i]<<" " << A[i+1]<<endl;
  		if(A[i]>A[i+1]){
- 			count+=A[i]; 
+ 			count+=A[i];
 		 }else{
 		 	count+=A[i+1];
-		 	i=i+1;
 		 }
 	 }
 	

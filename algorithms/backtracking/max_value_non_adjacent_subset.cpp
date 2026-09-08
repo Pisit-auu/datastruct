@@ -23,7 +23,8 @@ void sub(int l,int r,vector<int> A){
 	}
 	for(int i=j;i<r;i++){
 		A[l] = i;
-		if(A[l]-A[l-1]==1){
+		// at depth 0 there is no previous pick, so there is nothing to be adjacent to
+		if(l>0 && A[l]-A[l-1]==1){
 			continue;
 		}
 		sub(l+1,r,A);

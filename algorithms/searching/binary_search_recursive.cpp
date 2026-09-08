@@ -2,17 +2,19 @@
 using namespace std;
 
 int binarysearch(int A[],int l,int r,int find){
-	if(l<r){
+	// l<=r, otherwise a one-element range is never examined
+	if(l<=r){
 		int mid = (l+r)/2;
 		if(A[mid] ==find ){
 			return mid;
 		}
 		else if(A[mid] > find){
 			return binarysearch(A,l,mid-1,find);
-		}else if(A[mid] < find){
+		}else{
 			return binarysearch(A,mid+1,r,find);
 		}
 	}
+	return -1;
 }
 
 int main(){

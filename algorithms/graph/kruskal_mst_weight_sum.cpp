@@ -30,8 +30,8 @@ void kruskal(vector<pair<int, int> > adj[],int V){
             pq.push({adj[i][j].second, {i, adj[i][j].first}});
         }
     }
-	int ne =1;
-	while(ne<V-1){
+	int ne =0;
+	while(ne<V-1 && !pq.empty()){
 		int u = pq.top().second.first;
 		int v = pq.top().second.second;
 		int w  = pq.top().first;

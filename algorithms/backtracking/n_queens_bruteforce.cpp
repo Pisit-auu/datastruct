@@ -7,7 +7,6 @@ int coutns=0;
 
 void n_queens(int k){
 	if(k==n){
-		coutns++;
 		int flag =0;
 		for(int j=1;j<k;j++){
 			for(int p=0;p<j;p++){
@@ -17,6 +16,7 @@ void n_queens(int k){
 			}
 		}
 		if(flag==0){
+			coutns++;
 			for(int i=0;i<k;i++){
 				cout << x[i]+1<<" ";
 			}

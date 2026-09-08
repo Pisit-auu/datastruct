@@ -9,7 +9,7 @@ int main() {
     cout << setprecision(6) << fixed;
     double x=38,n=3;
     // cin>>x;cin>>n;
-    double xL = xL = 0, xR = 1000000, xM = 0, xM_new, xM_old, e=1;
+    double xL = 0, xR = 1000000, xM = 0, xM_new = 0, xM_old = 0, e=1;
     int i = 0;
 
     while (e != 0)

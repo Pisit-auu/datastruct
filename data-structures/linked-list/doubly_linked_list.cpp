@@ -24,16 +24,17 @@ class ptr{
 			head = new Node();
 		}
 		void push(int data){
-			
+
 				Node* x = new Node(data);
-				Node* ptr = head;
-				ptr->prev =x;
-				x->next = ptr;
-				x->prev = ptr->prev;
+				// link x in front of head before overwriting head->prev,
+				// otherwise x->prev ends up pointing at x itself
+				x->next = head;
+				x->prev = NULL;
+				head->prev = x;
 				head = x;
-			
+
 		}
-		int print(){
+		void print(){
 			for(Node* h=head;h->next!=NULL;h=h->next){
 				cout<< h->data <<":" ;
 			}

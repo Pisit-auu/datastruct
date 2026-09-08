@@ -44,19 +44,31 @@ g++ -std=gnu++11 -o program path/to/file.cpp
 - ไฟล์ `.exe` ที่คอมไพล์แล้วไม่ถูกเก็บใน git ดู `.gitignore`
 - ไฟล์ 5 ไฟล์มีคอมเมนต์ภาษาไทยที่บันทึกด้วย encoding TIS-620 จึงอ่านเป็นตัวอักษรเพี้ยนในโปรแกรมที่คาดหวัง UTF-8
 
-## bug ที่ยังค้างอยู่ในโค้ด
+## bug ที่แก้ไปแล้ว
 
-ตรวจพบตอนจัดระเบียบ ยังไม่ได้แก้เพื่อคงเนื้อหาโค้ดเดิมไว้ ถ้าจะเอาไฟล์เหล่านี้ไปใช้อ้างอิงควรแก้ก่อน
+ทุกไฟล์คอมไพล์ผ่านและไม่เหลือ warning จาก `-Wall -Wextra` ยกเว้นไฟล์ OpenCV ที่ต้องใช้ Windows API
 
-| ไฟล์ | ปัญหา |
+| ไฟล์ | ปัญหาเดิม |
 |---|---|
-| `algorithms/dynamic-programming/knapsack_01_memoization.cpp` | บรรทัด 32 พิมพ์ `<<cout` แทน `<<endl` คอมไพล์ไม่ผ่าน |
-| `algorithms/dynamic-programming/running_mean_recursive.cpp` | `findMean` ประกาศเป็น `double` แต่ไม่มี `return` ผลลัพธ์ไม่แน่นอน |
-| `algorithms/dynamic-programming/subset_max_count_target_sum.cpp` | memo ใช้ index แค่ `n` ไม่รวมค่าเป้าหมาย ทำให้ค่าที่ต่างกันชนกัน |
-| `algorithms/graph/kruskal_mst_weight_sum.cpp` | บรรทัด 33 เริ่ม `ne = 1` จึงรับ edge แค่ V-2 เส้น ขาดไป 1 เส้น |
-| `algorithms/backtracking/max_value_non_adjacent_subset.cpp` | อ่าน `A[-1]` เมื่อ `l == 0` |
-| `algorithms/backtracking/subset_sum_backtracking.cpp` | recursion ส่ง `l+1` แทนที่จะเป็น `i+1` |
-| `algorithms/greedy/v2_7_3_pair_max_sum.cpp` | อ่านเกินขอบ array เมื่อ n เป็นเลขคี่ |
-| `misc/opencv_screen_motion_autokey.cpp` | ต้องใช้ OpenCV และ Windows API คอมไพล์บน Linux ไม่ได้ |
+| `dynamic-programming/knapsack_01_memoization.cpp` | พิมพ์ `<<cout` แทน `<<endl` คอมไพล์ไม่ผ่าน |
+| `dynamic-programming/running_mean_recursive.cpp` | `findMean` ไม่มี `return` และ memo ตายตัวที่ 50 ช่อง |
+| `dynamic-programming/subset_max_count_target_sum.cpp` | memo ใช้ index แค่ `n` ไม่รวมเป้าหมาย, ค่า -1 ที่แปลว่าทำไม่ได้ถูกบวก 1 กลายเป็นคำตอบจริง, และ main เรียกด้วย `n-1` ทำให้ตกตัวสุดท้าย |
+| `dynamic-programming/binomial_coefficient_memo.cpp` | เช็ค memo แล้วไม่ `return` memo จึงไม่ถูกใช้เลย |
+| `graph/kruskal_mst_weight_sum.cpp` | กราฟที่ไม่เชื่อมกันทำให้อ่าน `pq.top()` ตอน queue ว่างแล้ววนไม่รู้จบ |
+| `graph/kruskal_mst_print_edges.cpp` | ปัญหาเดียวกัน |
+| `graph/graph_list_bfs_dfs_toolkit.cpp` | ฟังก์ชันนับ connected component ไม่ `return` ค่า |
+| `graph/dijkstra_bottleneck_capacity.cpp` | `&&` ปนกับ `||` โดยไม่มีวงเล็บ |
+| `backtracking/max_value_non_adjacent_subset.cpp` | อ่าน `A[-1]` เมื่อ `l == 0` |
+| `backtracking/subset_sum_backtracking.cpp` | recursion ส่ง `l+1` แทน `i+1` ทำให้พิมพ์ subset ซ้ำ |
+| `backtracking/n_queens_bruteforce.cpp` | นับทุก leaf (256 สำหรับ n=4) แทนที่จะนับเฉพาะคำตอบที่ถูก (2) |
+| `greedy/v2_7_3_pair_max_sum.cpp` | อ่านเกินขอบ array เมื่อ n เป็นเลขคี่ และมี `i=i+1` เกินมาทำให้ข้ามค่า |
+| `searching/binary_search_recursive.cpp` | `l<r` ทำให้ไม่เคยตรวจช่วงที่เหลือตัวเดียว และไม่ `return` เมื่อหาไม่เจอ |
+| `searching/interpolation_search.cpp` | หารด้วยศูนย์เมื่อ `A[l]==A[r]` และไม่ `return` เมื่อหาไม่เจอ |
+| `searching/hw2_1_interpolation_search.cpp` | recursion ไม่รู้จบเมื่อหาไม่เจอ, หารด้วยศูนย์, ไม่ `return` |
+| `linked-list/doubly_linked_list.cpp` | `push` เขียน `head->prev` ก่อนอ่าน ทำให้ `x->prev` ชี้กลับหาตัวเอง |
+| `numerical-methods/false_position_nth_root.cpp` | `double xL = xL = 0` เป็น undefined behavior |
 
-เวอร์ชันที่ถูกต้องของ Kruskal อยู่ที่ `algorithms/graph/kruskal_mst_print_edges.cpp`
+## ข้อจำกัดที่เหลือ
+
+- `misc/opencv_screen_motion_autokey.cpp` ต้องใช้ OpenCV และ Windows API คอมไพล์บน Linux ไม่ได้
+- `graph/dijkstra_bottleneck_capacity.cpp` เงื่อนไข `|| V==end` เทียบจำนวน vertex กับปลายทาง ดูไม่สมเหตุสมผล ผมใส่วงเล็บให้ตรงกับพฤติกรรมเดิมไว้ก่อน ยังไม่ได้เดาว่าโจทย์ต้องการอะไร

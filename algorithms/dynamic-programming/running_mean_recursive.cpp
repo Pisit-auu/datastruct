@@ -10,10 +10,12 @@ double findMean(int n){
 		return memo[n];
 	}
 	memo[n] = (A[n]+(n-1)*findMean(n-1))/n;
+	return memo[n];
 }
 int main(){
 	int n;
 	cin >> n;
+	memo.assign(n+1,-1);
 	for(int i=1;i<=n;i++){
 		cin >> A[i] ;
 	}

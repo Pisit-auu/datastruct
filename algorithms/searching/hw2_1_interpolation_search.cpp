@@ -3,6 +3,14 @@
 using namespace std;
 
 int InterSearch(const vector<int>& A,int k,int h,int l){
+	// without these guards a missing key recurses forever and indexes out of range
+	if(l>h || k<A[l] || k>A[h]){
+		return -1;
+	}
+	if(A[h]==A[l]){
+		// flat range, no interpolation possible without dividing by zero
+		return (A[l]==k) ? l : -1;
+	}
 	int pos;
 	pos = l + ((k-A[l])*(h-l))/(A[h]-A[l]);
 	cout << pos <<" ";
@@ -10,10 +18,9 @@ int InterSearch(const vector<int>& A,int k,int h,int l){
 		return pos;
 	}else if(A[pos] < k){
 		return InterSearch(A,k,h,pos+1);
-	}else if(A[pos] > k){
+	}else{
 		return InterSearch(A,k,pos-1,l);
 	}
-	
 }
 int main(){
 	int n;
@@ -26,5 +33,6 @@ int main(){
 	for(int i=0;i<n;i++){
 		cin >> A[i];
 	}
-	InterSearch(A,k,h,l);
+	int pos = InterSearch(A,k,h,l);
+	cout << endl << pos;
 }

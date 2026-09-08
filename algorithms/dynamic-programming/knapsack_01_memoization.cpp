@@ -29,8 +29,8 @@ int main(){
 	for(int i=0;i<n;i++){
 		cin >> v[i];
 	}
-	cout << back(n,capacity)<<cout;
-	for(int i=0;i<n;i++){
+	cout << back(n,capacity)<<endl;
+	for(int i=0;i<=n;i++){
 		for(int j=0;j<=capacity;j++){
 			cout << memo[i][j]<<" ";
 		}

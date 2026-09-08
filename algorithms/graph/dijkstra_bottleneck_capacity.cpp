@@ -21,7 +21,7 @@ void dijkstra(vector<pair<int,int> > adj[],int V,int src,int end){
 		for(int j=0;j<adj[u].size();++j){
 			int v = adj[u][j].first;
 			int w = adj[u][j].second;
-			if(intree[v] == false &&  w < dist[v] && (people+1)/w < ming || V==end){ 
+			if((intree[v] == false &&  w < dist[v] && (people+1)/w < ming) || V==end){
 				
 				if(people/w> maxx){
 					maxx = (people+1)/w;

@@ -75,6 +75,7 @@ int b(int V,vector<int> graph[]){
 			group++;
 		}
 	}
+	return group;
 }
 int main(){ 
 	int v,e;
